@@ -189,9 +189,9 @@
             if(this.options.parallax) {
                 // Prevent parallax when scroll position is negative to the window
                 if(scrollPos >= 0) {
-                    yPos = this.calculateYPos(scrollPos);
+                    yPos = this.calculateYPos(yPos,scrollPos);
                 } else {
-                    yPos = this.calculateYPos(0);
+                    yPos = this.calculateYPos(yPos, 0);
                 }
             } else {
                 yPos = -yPos;
@@ -207,12 +207,11 @@
             }
         },
 
-        calculateYPos: function (scrollPos) {
-            var videoPosition, videoOffset, yPos;
-
+        calculateYPos: function (yPos, scrollPos) {
+            var videoPosition, videoOffset;
             videoPosition = parseInt(this.options.$videoWrap.offset().top);
             videoOffset = videoPosition - scrollPos;
-            yPos = -(videoOffset / this.options.parallaxOptions.effect);
+            yPos = -((videoOffset / this.options.parallaxOptions.effect) + yPos);
 
             return yPos;
         },
